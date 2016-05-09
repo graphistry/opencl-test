@@ -2,13 +2,15 @@
 
 ## Ubuntu
 
+0. Start with a relatively recent Ubuntu Trusty image (available at https://cloud-images.ubuntu.com/locator/ec2/ ) and give it over 20GB of disk on the root partition.
+
 1. Follow `http://docs.ansible.com/ansible/intro_installation.html#latest-releases-via-apt-ubuntu` to install Ansible.
    (In short, `sudo apt-add-repository ppa:ansible/ansible && sudo apt-get update && sudo apt-get install ansible`.)
 
 2. Make your server's private key readable at `~/.ssh/nvidia-docker-host.pem`.
 
-3. Set the host ip address / cname to the contents of the local file `inventory`.
+3. Change the contents of the file `inventory` to the host ip address / cname. If your IPv4 address is 257.257.257.257, `echo 257.257.257.257 > inventory`.
 
-4. Run `ansible-playbook setup.yml -i inventory`.
+4. Run `ansible-playbook setup.yml -i inventory`. This includes some tests; if this finishes cleanly, you will have run a matrix multiply demo in a GPU container.
 
-5. If the playbook completes, you will have run the matrix multiply demo on a GPU container on your nvidia-docker-host.
+5. For additional verification, try to run the cljs convolution demo: run `sudo docker run -p 80:3001 -d graphistry/cljs:1.0` and then go to `257.257.257.257/?mode=opencl`.
