@@ -2,7 +2,7 @@ FROM graphistry/gpu-base:1.0
 
 # FROM https://raw.githubusercontent.com/nodejs/docker-node/master/0.10/Dockerfile
 
-RUN echo "export NODE_VERSION=0.10.44;export NPM_VERSION=2.14.1" >> /etc/profile.d/node-npm-versions.sh
+RUN echo "export NODE_VERSION=0.10.45;export NPM_VERSION=2.14.1" >> /etc/profile.d/node-npm-versions.sh
 
 # gpg keys listed at https://github.com/nodejs/node
 RUN set -ex \
@@ -27,10 +27,5 @@ RUN bash -l -c 'curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VE
         && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
         && npm install -g npm@"$NPM_VERSION" \
         && npm cache clear'
-
-
-# GC.
-
-RUN apt-get autoremove
 
 CMD clinfo
