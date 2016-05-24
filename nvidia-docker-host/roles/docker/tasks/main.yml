@@ -28,3 +28,8 @@
   become: yes
   become_user: root
   command: docker run hello-world
+
+- name: Run docker as nonroot
+  become: yes
+  become_user: root
+  command: usermod -aG docker {{ remote_user }}
