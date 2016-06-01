@@ -32,4 +32,4 @@
 - name: Run docker as nonroot
   become: yes
   become_user: root
-  command: usermod -aG docker {{ remote_user }}
+  command: usermod -aG docker {{ ansible_ssh_user }}
