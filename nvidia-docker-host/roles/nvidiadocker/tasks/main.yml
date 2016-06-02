@@ -1,49 +1,20 @@
 ---
-- name: Enjoy the thrill of HEAD from nvidia-docker
-  git: repo=https://github.com/NVIDIA/nvidia-docker.git
-       dest=/home/ubuntu/nvidia-docker
+- name: Get the latest release of nvidia-docker
+  get_url: "dest=/tmp/nvidia-docker.deb url=https://github.com/NVIDIA/nvidia-docker/releases/download/v1.0.0-rc.2/nvidia-docker_1.0.0.rc.2-1_amd64.deb"
 
-- name: Install nvidia-Docker
-  command: make install chdir=/home/ubuntu/nvidia-docker
+- name: Install nvidia-docker
+  command: dpkg -i /tmp/nvidia-docker.deb
   become: yes
   become_user: root
 
-- name: Setup nvidia-docker volumes for standalone use
-  command: nvidia-docker volume setup chdir=/home/ubuntu/nvidia-docker
-  become: yes
-  become_user: root
+- name: Run the cljs convolution demo
+  command: nvidia-docker run -d --name cljstest -p 80:3001 graphistry/cljs:1.0
 
-- name: Install test samples
-  command: /bin/bash -l -c "cuda-install-samples-7.5.sh /tmp"
+- name: Get the opencl version
+  command: bash -c "curl 'localhost/?mode=opencl' | sed -E -e 's/[0-9]+ ms /0 ms/' | sha256sum       > /tmp/sha"
 
-- name: Make the matrixMul test
-  command: make chdir=/tmp/NVIDIA_CUDA-7.5_Samples/0_Simple/matrixMul
+- name: Check against the straight JS version
+  command: bash -c "curl 'localhost/'             | sed -E -e 's/[0-9]+ ms /0 ms/' | sha256sum --check /tmp/sha"
 
-- name: Copy matrixMul to somewhere friendlier
-  command: cp /tmp/NVIDIA_CUDA-7.5_Samples/0_Simple/matrixMul/matrixMul /tmp/mm
-
-- name: Run nvidia-smi on the host
-  command: nvidia-smi
-
-- name: Run the matrix mul test on the host
-  command: /tmp/mm
-
-- name: Test running nvidia-smi on a blank container
-  command: nvidia-docker run --name=monolith nvidia/cuda nvidia-smi
-  become: yes
-  become_user: root
-
-- name: Add matrixMul to this blank container
-  command: nvidia-docker cp /tmp/mm monolith:/tmp
-  become: yes
-  become_user: root
-
-- name: Commit the fs on the container to an image
-  command: nvidia-docker commit monolith box1
-  become: yes
-  become_user: root
-
-- name: Run the matrix mul test on the container
-  command: nvidia-docker run box1 /tmp/mm
-  become: yes
-  become_user: root
+- name: Stop the cljs demo
+  command: docker rm -f cljstest
