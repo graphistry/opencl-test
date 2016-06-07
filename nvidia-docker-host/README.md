@@ -2,7 +2,7 @@
 
 ## Ubuntu
 
-0. Start with a relatively recent Ubuntu Trusty image (available at https://cloud-images.ubuntu.com/locator/ec2/ ) and give it over 20GB of disk on the root partition.
+0. Start with a relatively recent Ubuntu Trusty image (available at https://cloud-images.ubuntu.com/locator/ec2/ ) and give it over 20GB of disk on the root partition. (If installing from the stock AWS Ubuntu image, do a dist-upgrade first.)
 
 1. Follow `http://docs.ansible.com/ansible/intro_installation.html#latest-releases-via-apt-ubuntu` to install Ansible.
    (In short, `sudo apt-add-repository ppa:ansible/ansible && sudo apt-get update && sudo apt-get install ansible`.)
