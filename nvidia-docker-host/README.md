@@ -11,6 +11,6 @@
 
 3. Change the contents of the file `inventory` to the host ip address / cname. If your IPv4 address is 257.257.257.257, `echo 257.257.257.257 > inventory`.
 
-4. Run `ansible-playbook setup.yml -i inventory`. This includes some tests; if this finishes cleanly, you will have run a matrix multiply demo in a GPU container.
+4. Run `ansible-playbook setup.yml -i inventory`. This includes some tests; if this finishes cleanly, you will have run edge detection using Javascript on the CPU and OpenCL compiled to the GPU in a container.
 
 5. For additional verification, try to run the cljs convolution demo: run `sudo docker run -p 80:3001 -d graphistry/cljs:1.0` and then go to `257.257.257.257/?mode=opencl`.
