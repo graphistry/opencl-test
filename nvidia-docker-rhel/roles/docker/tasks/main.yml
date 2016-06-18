@@ -1,0 +1,23 @@
+---
+- name: Add Docker repo
+  copy: dest=/etc/yum.repos.d/docker.repo src=docker.repo owner=root group=root mode=0644
+  become: yes
+  become_user: root
+
+- name: Install Docker
+  become: yes
+  become_user: root
+  yum: name=docker-engine
+
+- name: Start the docker daemon
+  become: yes
+  become_user: root
+  service: name=docker state=started
+
+- name: Run docker as nonroot
+  become: yes
+  become_user: root
+  command: usermod -aG docker {{ ansible_ssh_user }}
+
+- name: Verify docker is installed correctly
+  command: docker run hello-world

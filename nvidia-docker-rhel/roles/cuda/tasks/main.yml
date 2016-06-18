@@ -1,0 +1,35 @@
+---
+- name: "Download CUDA repo .deb package"
+  get_url: "dest=/tmp/cuda.rpm url=http://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/cuda-repo-rhel7-7.5-18.x86_64.rpm"
+
+- name: "Download EPEL Release"
+  get_url: "dest=/tmp/epel.rpm url=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
+
+- name: Add EPEL rpm
+  command: "rpm -Uvh /tmp/epel.rpm"
+  become: yes
+  become_user: root
+
+- name: Add CUDA rpm
+  command: "rpm -i /tmp/cuda.rpm"
+  become: yes
+  become_user: root
+
+- name: yum clean
+  command: "yum clean"
+  become: yes
+  become_user: root
+
+- name: Install cuda
+  yum: name=cuda
+  become: yes
+  become_user: root
+  notify:
+      - Reboot server
+      - Wait for server to restart
+
+# Force handlers to run, which will cause a reboot here if one is to be performed
+- meta: flush_handlers
+
+- name: Test nvidia-smi
+  command: nvidia-smi

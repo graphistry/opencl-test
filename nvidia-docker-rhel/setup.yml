@@ -1,0 +1,6 @@
+---
+- hosts: all
+  roles:
+    - { role: docker }
+    - { role: cuda }
+    - { role: nvidiadocker }
