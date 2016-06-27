@@ -7,6 +7,9 @@
   become: yes
   become_user: root
 
+- name: Run the nvidia-smi demo
+  command: nvidia-docker run nvidia/cuda:7.5 nvidia-smi
+
 - name: Run the cljs convolution demo
   command: nvidia-docker run -d --name cljstest -p 80:3001 graphistry/cljs:1.0
 
