@@ -16,7 +16,7 @@
   become_user: root
 
 - name: yum clean
-  command: "yum clean"
+  command: "yum clean all"
   become: yes
   become_user: root
 
