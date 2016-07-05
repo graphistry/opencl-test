@@ -14,10 +14,12 @@
   become_user: root
   service: name=docker state=started
 
+- name: Verify docker is installed correctly
+  command: docker run hello-world
+  become: yes
+  become_user: root
+
 - name: Run docker as nonroot
   become: yes
   become_user: root
   command: usermod -aG docker {{ ansible_ssh_user }}
-
-- name: Verify docker is installed correctly
-  command: docker run hello-world
