@@ -1,6 +1,6 @@
 ---
 - name: Reboot server
-  command: shutdown -r now "Ansible updates triggered"
+  shell: sleep 1 && shutdown -r now "Ansible updates triggered"
   become: yes
   become_user: root
   async: 0
