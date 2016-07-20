@@ -23,3 +23,8 @@
   become: yes
   become_user: root
   command: usermod -aG docker {{ ansible_ssh_user }}
+
+- name: Run docker engine at boot
+  become: yes
+  become_user: root
+  command: chkconfig docker on
