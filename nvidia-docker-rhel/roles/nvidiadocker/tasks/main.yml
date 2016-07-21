@@ -11,6 +11,12 @@
   become: yes
   become_user: root
   command: chkconfig nvidia-docker on
+  notify:
+    - Reboot server
+    - Wait for server to restart
+
+- meta: flush_handlers
+
 
 - name: Run the cljs convolution demo
   command: nvidia-docker run -d --name cljstest -p 80:3001 graphistry/cljs:1.0
