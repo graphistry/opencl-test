@@ -28,8 +28,3 @@
   become: yes
   become_user: root
   command: chkconfig docker on
-
-- name: Run nvidia-docker at boot
-  become: yes
-  become_user: root
-  command: chkconfig nvidia-docker on

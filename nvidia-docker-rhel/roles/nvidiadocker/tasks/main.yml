@@ -7,6 +7,11 @@
   become: yes
   become_user: root
 
+- name: Run nvidia-docker at boot
+  become: yes
+  become_user: root
+  command: chkconfig nvidia-docker on
+
 - name: Run the cljs convolution demo
   command: nvidia-docker run -d --name cljstest -p 80:3001 graphistry/cljs:1.0
 
