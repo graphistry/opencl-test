@@ -8,7 +8,7 @@
   become_user: root
 
 - name: Run the cljs convolution demo
-  command: nvidia-docker run -d --name cljstest -p 80:3001 graphistry/cljs:1.0
+  command: nvidia-docker run -d --name cljstest -p 80:3001 graphistry/cljs:1.0.1
 
 - name: Get the opencl version
   command: bash -c "curl 'localhost/?mode=opencl' | sed -E -e 's/[0-9]+ ms /0 ms/' | sha256sum       > /tmp/sha"
