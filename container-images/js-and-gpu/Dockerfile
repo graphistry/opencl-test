@@ -1,4 +1,4 @@
-FROM graphistry/gpu-base:1.0
+FROM graphistry/gpu-base:1.1
 
 # FROM https://raw.githubusercontent.com/nodejs/docker-node/master/0.10/Dockerfile
 
@@ -27,5 +27,3 @@ RUN bash -l -c 'curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VE
         && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
         && npm install -g npm@"$NPM_VERSION" \
         && npm cache clear'
-
-CMD clinfo
