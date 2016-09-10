@@ -10,6 +10,6 @@ RUN apt-get update && \
 RUN echo "export CPLUS_INCLUDE_PATH=/usr/local/cuda/include;export LIBRARY_PATH=/usr/local/cuda/lib64;export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH;export PATH=/usr/local/cuda/bin:$PATH;export C_INCLUDE_PATH=/usr/local/cuda/include" >> /etc/profile.d/cuda-libs.sh
 
 WORKDIR /
-RUN git clone https://github.com/glfw/glfw.git && pushd glfw && bash -l -c 'cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS=TRUE && make && make install' && popd
+RUN git clone https://github.com/glfw/glfw.git && cd glfw && bash -l -c 'cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS=TRUE && make && make install' && cd ..
 
 CMD clinfo
