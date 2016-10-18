@@ -2,7 +2,7 @@ FROM graphistry/gpu-base:1.1
 
 # FROM https://raw.githubusercontent.com/nodejs/docker-node/master/0.10/Dockerfile
 
-RUN echo "export NODE_VERSION=6.7.0;export NPM_VERSION=3.10.8" >> /etc/profile.d/node-npm-versions.sh
+RUN echo "export NODE_VERSION=6.9.0;export NPM_VERSION=3.10.9" >> /etc/profile.d/node-npm-versions.sh
 
 # gpg keys listed at https://github.com/nodejs/node
 RUN set -ex \
