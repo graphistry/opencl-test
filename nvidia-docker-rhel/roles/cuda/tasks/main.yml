@@ -14,8 +14,8 @@
 
 - meta: flush_handlers
 
-- name: "Add kernel dev packages"
-  command: yum install -y kernel-devel
+- name: "Add kernel dev and gcc packages"
+  command: yum install -y kernel-devel gcc
   become: yes
   become_user: root
 
