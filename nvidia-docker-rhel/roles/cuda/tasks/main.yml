@@ -1,34 +1,35 @@
 ---
-- name: "Download CUDA repo .deb package"
-  get_url: "dest=/tmp/cuda.rpm url=http://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/cuda-repo-rhel7-7.5-18.x86_64.rpm"
-
-- name: "Download EPEL Release"
-  get_url: "dest=/tmp/epel.rpm url=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
-
-- name: Add EPEL rpm
-  command: "rpm -Uvh /tmp/epel.rpm"
+- name: "Disable nouveau"
+  copy: content="blacklist nouveau" dest=/etc/modprobe.d/blacklist.conf
   become: yes
   become_user: root
 
-- name: Add CUDA rpm
-  command: "rpm -i /tmp/cuda.rpm"
+- name: "Generate initramfs image"
+  command: sh -c 'dracut --force -v /boot/initramfs-$(uname -r).img $(uname -r)'
+  become: yes
+  become_user: root
+  notify:
+    - Reboot server
+    - Wait for server to restart
+
+- meta: flush_handlers
+
+- name: "Add kernel dev packages"
+  command: yum install -y kernel-devel
   become: yes
   become_user: root
 
-- name: yum clean
-  command: "yum clean all"
-  become: yes
-  become_user: root
+- name: "Download nvidia drivers"
+  get_url: "dest=/tmp/nv.run url=http://us.download.nvidia.com/XFree86/Linux-x86_64/367.57/NVIDIA-Linux-x86_64-367.57.run"
 
-- name: Install cuda
-  yum: name=cuda
+- name: "Install nvidia drivers"
+  command: sh /tmp/nv.run -s
   become: yes
   become_user: root
   notify:
       - Reboot server
       - Wait for server to restart
 
-# Force handlers to run, which will cause a reboot here if one is to be performed
 - meta: flush_handlers
 
 - name: Test nvidia-smi
