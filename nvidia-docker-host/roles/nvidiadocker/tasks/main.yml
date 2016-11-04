@@ -8,4 +8,4 @@
   become_user: root
 
 - name: Run the cljs test
-  command: nvidia-docker run graphistry/cljs:1.1 npm test
+  command: nvidia-docker run --rm graphistry/cljs:1.1 npm test
