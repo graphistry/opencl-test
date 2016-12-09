@@ -4,4 +4,4 @@ We are excited to share our infrastructure automation, and hope that it will be 
 
 ## Documentation
 
-* [Nvidia-Docker-Host](https://github.com/graphistry/infrastructure/tree/master/nvidia-docker-host): How to initialize a box to hold containers that run GPU code.
+* [Nvidia-Docker-Host](https://github.com/graphistry/infrastructure/tree/master/nvidia-docker-host): How to initialize a box to hold containers that run OpenCL code.
