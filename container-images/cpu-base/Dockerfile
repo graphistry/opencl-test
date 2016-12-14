@@ -13,7 +13,7 @@ RUN apt-get update && \
 
 # FROM https://raw.githubusercontent.com/nodejs/docker-node/master/0.10/Dockerfile
 
-RUN echo "export NODE_VERSION=6.7.0;export NPM_VERSION=3.10.8" >> /etc/profile.d/node-npm-versions.sh
+ENV NODE_VERSION 6.9.2
 
 # gpg keys listed at https://github.com/nodejs/node
 RUN set -ex \
@@ -36,5 +36,4 @@ RUN bash -l -c 'curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VE
         && grep " node-v$NODE_VERSION-linux-x64.tar.xz\$" SHASUMS256.txt | sha256sum -c - \
         && tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 \
         && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
-        && npm install -g npm@"$NPM_VERSION" \
         && npm cache clear'
