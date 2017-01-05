@@ -13,7 +13,7 @@ RUN apt-get update && \
 
 # FROM https://raw.githubusercontent.com/nodejs/docker-node/master/0.10/Dockerfile
 
-ENV NODE_VERSION 6.9.2
+ENV NODE_VERSION 6.9.3
 
 # gpg keys listed at https://github.com/nodejs/node
 RUN set -ex \
