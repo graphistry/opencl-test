@@ -1,10 +1,4 @@
-FROM graphistry/gpu-base:1.1
-
-# FROM https://raw.githubusercontent.com/nodejs/docker-node/master/0.10/Dockerfile
-
-RUN echo "export NODE_VERSION=6.9.1;export NPM_VERSION=3.10.9" >> /etc/profile.d/node-npm-versions.sh
-
-# gpg keys listed at https://github.com/nodejs/node
+FROM graphistry/gpu-base:8.0
 RUN set -ex \
   && for key in \
     9554F04D7259F04124DE6B476D5A82AC7E37093B \
@@ -19,11 +13,18 @@ RUN set -ex \
     gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
   done
 
-RUN bash -l -c 'curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
-        && curl -vSLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
-        && gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc \
-        && grep " node-v$NODE_VERSION-linux-x64.tar.xz\$" SHASUMS256.txt | sha256sum -c - \
-        && tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 \
-        && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
-        && npm install -g npm@"$NPM_VERSION" \
-        && npm cache clear'
+ENV NPM_CONFIG_LOGLEVEL info
+ENV NODE_VERSION 7.4.0
+
+RUN buildDeps='xz-utils' \
+    && set -x \
+    && apt-get update && apt-get install -y $buildDeps --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/* \
+    && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
+    && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
+    && gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc \
+    && grep " node-v$NODE_VERSION-linux-x64.tar.xz\$" SHASUMS256.txt | sha256sum -c - \
+    && tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 \
+    && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
+    && apt-get purge -y --auto-remove $buildDeps \
+    && ln -s /usr/local/bin/node /usr/local/bin/nodejs
