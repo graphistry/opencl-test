@@ -1,6 +1,6 @@
 ---
 - name: Get the latest release of nvidia-docker
-  get_url: "dest=/tmp/nvidia-docker.rpm url=https://github.com/NVIDIA/nvidia-docker/releases/download/v1.0.0-rc.3/nvidia-docker-1.0.0.rc.3-1.x86_64.rpm"
+  get_url: "dest=/tmp/nvidia-docker.rpm url=https://github.com/NVIDIA/nvidia-docker/releases/download/v1.0.1/nvidia-docker-1.0.1-1.x86_64.rpm"
 
 - name: Install nvidia-docker
   command: rpm -i /tmp/nvidia-docker.rpm
