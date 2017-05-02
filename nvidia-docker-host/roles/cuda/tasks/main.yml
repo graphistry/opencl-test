@@ -5,9 +5,12 @@
   become_user: root
 
 - name: Add long-lived Nvidia drivers
-  apt: pkg=nvidia-375 state=present update_cache=yes
+  apt: pkg={{ item }} state=present update_cache=yes
   become: yes
   become_user: root
+  with_items:
+      - nvidia-375
+      - nvidia-modprobe
   notify:
       - Reboot server
       - Wait for server to restart
