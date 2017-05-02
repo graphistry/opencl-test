@@ -1,21 +1,37 @@
 ---
+- name: Ensure OS is up to date
+  become: yes
+  become_user: root
+  apt: update_cache=yes upgrade=dist
+
+- name: Use HTTPS apt repositories
+  become: yes
+  become_user: root
+  apt: update_cache=yes name={{ item }}
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - software-properties-common
+
 - name: Add Docker GPG key
   become: yes
   become_user: root
-  apt_key: keyserver=p80.pool.sks-keyservers.net id=58118E89F3A912897C070ADBF76221572C52609D
+  apt_key: url=https://download.docker.com/linux/ubuntu/gpg
+  state: present
 
 - name: Create a list file for Docker
   become: yes
   become_user: root
-  apt_repository: repo="deb https://apt.dockerproject.org/repo ubuntu-trusty main"
+  apt_repository: repo="deb https://download.docker.com/linux/ubuntu ubuntu-xenial main"
 
 - name: Install Docker
   become: yes
   become_user: root
   apt: update_cache=yes name={{ item }}
   with_items:
-    - linux-image-generic-lts-trusty
-    - linux-headers-generic-lts-trusty
+    - linux-image-generic-lts-xenial
+    - linux-headers-generic-lts-xenial
     - apparmor
     - docker-engine
 

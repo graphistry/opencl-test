@@ -8,23 +8,16 @@
         group=root
         mode=0644
 
-- name: "Download CUDA repo .deb package"
-  get_url: "dest=/tmp/cuda-repo-ubuntu1404_7.5-18_amd64.deb url=http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_7.5-18_amd64.deb"
-
-- name: Install CUDA repo .deb package
-  apt: "deb=/tmp/cuda-repo-ubuntu1404_7.5-18_amd64.deb state=present"
+- name: Add kernel dev and gcc packages
+  apt: pkg=kernel-devel gcc state=present update_cache=yes
   become: yes
   become_user: root
 
-- name: Update APT cache
-  apt: update_cache=yes
-  become: yes
-  become_user: root
+- name: Download nvidia drivers
+  get_url: "dest=/tmp/nv.run url=http://us.download.nvidia.com/XFree86/Linux-x86_64/367.57/NVIDIA-Linux-x86_64-367.57.run"
 
-- name: Install CUDA 7.5 (includes NVIDIA drivers)
-  apt: pkg=cuda-7-5
-       state=present
-       cache_valid_time=600
+- name: Install nvidia drivers
+  command: sh /tmp/nv.run -s
   become: yes
   become_user: root
   notify:
