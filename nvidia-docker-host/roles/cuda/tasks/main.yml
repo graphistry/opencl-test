@@ -7,6 +7,22 @@
     - gcc
     - make
 
+- name: Disable nouveau
+  copy: content="blacklist nouveau" dest=/etc/modprobe.d/blacklist.conf
+  become: yes
+  become_user: root
+
+- name: Generate initramfs image
+  command: update-initramfs -u
+  become: yes
+  become_user: root
+  notify:
+      - Reboot server
+      - Wait for server to restart
+
+# Force handlers to run, which will cause a reboot here if one is to be performed
+- meta: flush_handlers
+
 - name: Download nvidia drivers
   get_url: "dest=/tmp/nv.run url=http://us.download.nvidia.com/XFree86/Linux-x86_64/367.57/NVIDIA-Linux-x86_64-367.57.run"
 
