@@ -17,8 +17,7 @@
 - name: Add Docker GPG key
   become: yes
   become_user: root
-  apt_key: url=https://download.docker.com/linux/ubuntu/gpg
-  state: present
+  apt_key: url=https://download.docker.com/linux/ubuntu/gpg state=present
 
 - name: Create a list file for Docker
   become: yes
