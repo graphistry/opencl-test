@@ -22,7 +22,7 @@
 - name: Create a list file for Docker
   become: yes
   become_user: root
-  apt_repository: repo="deb [arch=amd64] https://download.docker.com/linux/ubuntu ubuntu-xenial stable"
+  apt_repository: repo="deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
 
 - name: Install Docker
   become: yes
