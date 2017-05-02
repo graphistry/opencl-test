@@ -1,6 +1,6 @@
 ---
 - name: Add ubuntu graphics-drivers ppa
-  apt_repository: "ppa:graphics-drivers/ppa"
+  apt_repository: repo="ppa:graphics-drivers/ppa"
   become: yes
   become_user: root
 
