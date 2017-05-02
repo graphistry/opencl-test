@@ -1,19 +1,11 @@
 ---
-- name: Add kernel dev and gcc packages
-  apt: pkg={{ item }} state=present update_cache=yes
-  become: yes
-  become_user: root
-  with_items:
-    - gcc
-    - make
-
-- name: Disable nouveau
-  copy: content="blacklist nouveau" dest=/etc/modprobe.d/blacklist.conf
+- name: Add ubuntu graphics-drivers ppa
+  apt_repository: "ppa:graphics-drivers/ppa"
   become: yes
   become_user: root
 
-- name: Generate initramfs image
-  command: update-initramfs -u
+- name: Add long-lived Nvidia drivers
+  apt: pkg=nvidia-375 state=present update_cache=yes
   become: yes
   become_user: root
   notify:
@@ -22,25 +14,6 @@
 
 # Force handlers to run, which will cause a reboot here if one is to be performed
 - meta: flush_handlers
-
-- name: Download nvidia drivers
-  get_url: "dest=/tmp/nv.run url=http://us.download.nvidia.com/XFree86/Linux-x86_64/367.57/NVIDIA-Linux-x86_64-367.57.run"
-
-- name: Install nvidia drivers
-  command: sh /tmp/nv.run -s
-  become: yes
-  become_user: root
-  notify:
-      - Reboot server
-      - Wait for server to restart
-
-# Force handlers to run, which will cause a reboot here if one is to be performed
-- meta: flush_handlers
-
-- name: Install linux-image-extra
-  apt: pkg=linux-image-extra-virtual
-  become: yes
-  become_user: root
 
 - name: Test nvidia-smi
   command: nvidia-smi
