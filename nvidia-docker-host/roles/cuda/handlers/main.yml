@@ -1,6 +1,6 @@
 ---
 - name: Reboot server
-  shell: shutdown -r +5 "Ansible updates triggered"
+  shell: nohup bash -c "sleep 2 && reboot" &
   become: yes
   become_user: root
   async: 0
