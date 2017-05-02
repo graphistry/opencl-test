@@ -32,7 +32,7 @@
     - linux-image-generic-lts-xenial
     - linux-headers-generic-lts-xenial
     - apparmor
-    - docker-engine
+    - docker-ce
 
 - name: Start the docker daemon
   become: yes
