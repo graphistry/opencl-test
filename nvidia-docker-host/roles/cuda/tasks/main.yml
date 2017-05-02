@@ -1,8 +1,11 @@
 ---
 - name: Add kernel dev and gcc packages
-  apt: pkg=gcc state=present update_cache=yes
+  apt: pkg={{ item }} state=present update_cache=yes
   become: yes
   become_user: root
+  with_items:
+    - gcc
+    - make
 
 - name: Download nvidia drivers
   get_url: "dest=/tmp/nv.run url=http://us.download.nvidia.com/XFree86/Linux-x86_64/367.57/NVIDIA-Linux-x86_64-367.57.run"
