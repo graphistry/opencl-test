@@ -1,6 +1,6 @@
 # Setting up a host for nvidia-docker containers
 
-##You May Already Be Done
+## You May Already Be Done
 
 1. You may already have nvidia-docker setup. You can test via:
 
