@@ -11,4 +11,4 @@
 
 4. Run `ansible-playbook setup.yml -i inventory  -e 'ansible_python_interpreter=/usr/bin/python3'`. This includes some tests; if this finishes cleanly, you will have run edge detection using Javascript on the CPU and OpenCL compiled to the GPU in a container.
 
-5. For additional verification, try to run the cljs convolution demo: run `sudo docker run -p 80:3001 -d graphistry/cljs:1.0` and then go to `257.257.257.257/?mode=opencl`.
+5. For additional verification, try to run the cljs convolution demo: run `sudo nvidia-docker run -p 80:3001 -d graphistry/cljs:1.0` and then go to `257.257.257.257/?mode=opencl`.
