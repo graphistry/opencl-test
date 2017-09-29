@@ -1,5 +1,25 @@
 # Setting up a host for nvidia-docker containers
 
+##You May Already Be Done
+
+1. You may already have nvidia-docker setup. You can test via:
+
+Run `nvidia-docker run --rm graphistry/cljs:1.1 npm test`
+
+Expected output:
+
+```
+> cljs@0.0.1 test /app
+> ./tests/add.js
+
+Ran
+Success
+```
+
+2. Check a more involved demo with visual verification:
+
+`sudo nvidia-docker run -p 80:3001 -d graphistry/cljs:1.0` and then go to `257.257.257.257/?mode=opencl`.
+
 ## Ubuntu Xenial
 
 1. Follow `http://docs.ansible.com/ansible/intro_installation.html#latest-releases-via-apt-ubuntu` to install Ansible.
