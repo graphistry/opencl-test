@@ -1,5 +1,26 @@
 # Setting up a host for nvidia-docker containers
 
+## You May Already Be Done
+
+You may already have nvidia-docker setup. You can test via:
+
+1. Run `nvidia-docker run --rm graphistry/cljs:1.1 npm test`
+
+Expected output:
+
+```
+> cljs@0.0.1 test /app
+> ./tests/add.js
+
+Ran
+Success
+```
+
+2. Check a more involved demo with visual verification:
+
+`sudo docker run -p 80:3001 -d graphistry/cljs:1.0` and then go to `257.257.257.257/?mode=opencl`.
+
+
 ## RHEL
 
 0. Start with a relatively recent RHEL 7.2 image and give it over 20GB of disk on the root partition.
