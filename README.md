@@ -1,6 +1,6 @@
-# Graphistry Infrastructure
+# Graphistry OpenCL Infrastructure
 
-We are excited to share our infrastructure automation, and hope that it will be useful to you. We are enthusiastic about artifact-based workflows, and our artifacts are Docker containers that run our OpenCL code.
+We are excited to share part of our OpenCL infrastructure, and hope that it will be useful to you. We are enthusiastic about artifact-based workflows, and our artifacts are Docker containers that run our OpenCL code. We primarily use this repo as part of our testing flow.
 
 ## Install docker & nvidia-docker on a machine
 
